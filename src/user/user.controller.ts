@@ -8,13 +8,18 @@ import {
   Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('api/users')
 export class UserController {
-  constructor(private userSevice: UserService) {}
+  constructor(
+    private userSevice: UserService,
+    private configService: ConfigService,
+  ) {}
 
   @Get()
   getAll() {
+    console.log(this.configService.get('DATABASE_NAME'));
     return this.userSevice.findAll();
   }
   @Get(':id')
