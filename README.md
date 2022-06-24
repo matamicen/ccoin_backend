@@ -45,6 +45,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+# Migrate
+$ npm run migrations:generate -- nombre_de_migracion
+$ npm run migrations:run
+
+# Levantar postgre
+$ docker-compose database up
+
 ## Test
 
 ```bash

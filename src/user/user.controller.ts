@@ -7,21 +7,24 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
+import { UserService } from './user.service';
 
 @Controller('api/users')
 export class UserController {
+  constructor(private userSevice: UserService) {}
+
   @Get()
-  getHello(): string {
-    return 'sdsdsd3333';
+  getAll() {
+    return this.userSevice.findAll();
   }
   @Get(':id')
-  getUser(@Param('id') id: number): string {
-    return `getUser: ${id}`;
+  getUser(@Param('id') id: number) {
+    return this.userSevice.findOne(id);
   }
 
   @Post()
-  createUser(@Body() body: any): string {
-    return `CreateUser: ${JSON.stringify(body)}`;
+  createUser(@Body() body: any) {
+    return this.userSevice.create(body);
   }
 
   @Put(':id')
