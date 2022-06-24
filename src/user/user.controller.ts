@@ -9,6 +9,9 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
+import { User } from '../types';
+import { User as UserEntity } from './entities/user.entity';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('api/users')
 export class UserController {
@@ -28,7 +31,8 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() body: any) {
+  @ApiBody({ type: UserEntity })
+  createUser(@Body() body: User) {
     return this.userSevice.create(body);
   }
 
