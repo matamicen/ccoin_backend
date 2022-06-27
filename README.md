@@ -49,8 +49,10 @@ $ npm run start:prod
 $ npm run migrations:generate -- nombre_de_migracion
 $ npm run migrations:run
 
-# Levantar postgre
-$ docker-compose database up
+# Levantar postgre y nest en dockers
+$ docker-compose -f docker-local.yml up
+# Build de nest y database
+$ docker-compose -f docker-local.yml build
 
 ## Test
 

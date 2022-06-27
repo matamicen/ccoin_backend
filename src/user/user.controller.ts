@@ -23,6 +23,7 @@ export class UserController {
   @Get()
   getAll() {
     console.log(this.configService.get('DATABASE_NAME'));
+    console.log('pepe4');
     return this.userSevice.findAll();
   }
   @Get(':id')
