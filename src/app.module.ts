@@ -34,5 +34,7 @@ export class AppModule {
   static port: number;
   constructor(private readonly configService: ConfigService) {
     AppModule.port = this.configService.get('PORT');
+    console.log('Matias');
+    console.log(configService.get<string>('DATABASE_HOST'));
   }
 }

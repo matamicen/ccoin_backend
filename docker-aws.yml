@@ -1,0 +1,35 @@
+version: '3'
+
+volumes:
+  postgres_data:
+
+services:
+  
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    container_name: local_database
+    environment:
+     - POSTGRES_DB=blackprop
+     - POSTGRES_USER=admin
+     - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+  nest:
+    image: matamicen/nest_local:latest
+    container_name: nest
+    command: sh -c "sleep 10 && npm run migrations:run && node dist/src/main" 
+    environment:
+     - DATABASE_TYPE=postgres
+     - DATABASE_HOST=local_database
+     - DATABASE_PORT=5432
+     - PORT=3000
+     - DATABASE_USER=admin
+     - DATABASE_PASS=postgres
+     - DATABASE_NAME=blackprop
+    ports: 
+     - '80:3000'
+    depends_on:
+      - db

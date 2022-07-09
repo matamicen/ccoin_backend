@@ -2,14 +2,15 @@ version: '3.3'
 
 services:
   database:
-    image: postgres:14
-    # environment:
-    #  - POSTGRES_DB=blackprop2
-    #  - POSTGRES_USER=admin
-    #  - POSTGRES_PASSWORD=postgres
+    # image: postgres:14
+    image: postgres:12-alpine
+    environment:
+     - POSTGRES_DB=blackprop
+     - POSTGRES_USER=admin
+     - POSTGRES_PASSWORD=postgres
     container_name: local_database
-    env_file:
-      - ./.envs/.local/.postgres
+    # env_file:
+    #   - ./.envdevaws
     ports: 
      - '5432:5432'
     volumes:
@@ -21,12 +22,17 @@ services:
       dockerfile: ./compose/local/nest/Dockerfile
     image: nest_local
     container_name: local_nest
+    # command: sh -c "npm run start:dev"
+    command: sh -c "sleep 10 && npm run migrations:run && npm run start:dev"
     # command: node dist/main
-    command: npm run start:dev
+    # command: npm run start:dev
     # entrypoint: ["npm", "run", "start"]
     env_file:
-      - ./.envs/.local/.nest
+      # - ./.envs/.local/.nest
+      - ./.envlocal
     ports: 
-     - '3000:3000'
+     - '80:3000'
     volumes:
       - ./:/app
+    depends_on:
+      - database

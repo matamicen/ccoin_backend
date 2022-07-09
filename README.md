@@ -50,10 +50,17 @@ $ npm run migrations:generate -- nombre_de_migracion
 $ npm run migrations:run
 
 # Levantar postgre y nest en dockers
+```bash
 $ docker-compose -f docker-local.yml up
+```
 # Build de nest y database
+```bash
 $ docker-compose -f docker-local.yml build
-
+```
+# Levantar solo el postgre local
+```bash
+docker-compose -f docker-local.yml up database 
+```
 ## Test
 
 ```bash

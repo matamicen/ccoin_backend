@@ -23,4 +23,10 @@ export class User {
     nullable: true,
   })
   email2: string;
+
+  @ApiProperty()
+  @Column({
+    nullable: true,
+  })
+  email11: string;
 }

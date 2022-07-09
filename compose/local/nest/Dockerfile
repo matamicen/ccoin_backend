@@ -9,8 +9,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-COPY .env .
+# COPY .env .
 RUN npm run build
-# CMD ["node", "dist/main"]
+CMD ["node", "dist/main"]
 # COPY yarn.lock ./
 # RUN yarn install
