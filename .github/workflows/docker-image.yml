@@ -16,4 +16,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file ./compose/local/nest/Dockerfile --tag matamicen/nest_local:latest
+           docker push matamicen/nest_local
     # run: docker build . --file ./compose/local/nest/Dockerfile --tag matamicen/nest_local:$(date +%s)
