@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   getHello(@Res() response): string {
-    return response.status(HttpStatus.ACCEPTED).send('ok matt30');
+    return response.status(HttpStatus.ACCEPTED).send('ok matt38');
     // return this.appService.getHello();
   }
 }
