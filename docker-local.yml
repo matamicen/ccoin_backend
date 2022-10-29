@@ -8,7 +8,7 @@ services:
      - POSTGRES_DB=blackprop
      - POSTGRES_USER=admin
      - POSTGRES_PASSWORD=postgres
-    container_name: local_database
+    container_name: local_database_blackprop
     # env_file:
     #   - ./.envdevaws
     ports: 

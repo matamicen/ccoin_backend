@@ -1,5 +1,5 @@
 DATABASE_TYPE=postgres
-DATABASE_HOST=local_database
+DATABASE_HOST=local_database_blackprop
 DATABASE_PORT=5432
 PORT=3000
 DATABASE_USER=admin
