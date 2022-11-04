@@ -19,6 +19,14 @@ export class UserService {
     });
   }
 
+  async findByemail(email: string): Promise<User | undefined> {
+    return this.userRepo.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
   async create(body: any): Promise<User> {
     console.log('viene bien1');
     const newUser = new User();
@@ -28,6 +36,7 @@ export class UserService {
     newUser.email = body.email;
     console.log('viene bien3');
     newUser.email2 = body.email2;
+    newUser.password = body.password;
     return this.userRepo.save(newUser);
   }
 }

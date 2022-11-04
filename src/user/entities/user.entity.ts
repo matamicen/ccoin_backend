@@ -22,6 +22,12 @@ export class User {
   @Column({
     nullable: true,
   })
+  password: string;
+
+  @ApiProperty()
+  @Column({
+    nullable: true,
+  })
   email2: string;
 
   @ApiProperty()
