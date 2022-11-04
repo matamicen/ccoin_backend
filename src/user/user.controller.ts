@@ -6,12 +6,14 @@ import {
   Body,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '../types';
 import { User as UserEntity } from './entities/user.entity';
 import { ApiBody } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/users')
 export class UserController {
@@ -26,6 +28,7 @@ export class UserController {
     console.log('pepe10');
     return this.userSevice.findAll();
   }
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   getUser(@Param('id') id: number) {
     return this.userSevice.findOne(id);
