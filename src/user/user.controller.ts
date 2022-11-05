@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Param,
+  Req,
   Post,
   Body,
   Delete,
@@ -30,7 +31,8 @@ export class UserController {
   }
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
-  getUser(@Param('id') id: number) {
+  getUser(@Param('id') id: number, @Req() req: any) {
+    console.log(req.user);
     return this.userSevice.findOne(id);
   }
 
