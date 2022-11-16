@@ -36,6 +36,16 @@ export class UserController {
     return this.userSevice.findOne(id);
   }
 
+  @Get('/challenge/:wallet')
+  async getUserChallenge(@Param('wallet') wallet: string) {
+    console.log('wallet:' + wallet);
+    const authenticationTransaction: string =
+      await this.userSevice.generateChallengeTx(wallet);
+    console.log(authenticationTransaction);
+    const obj = { tx: authenticationTransaction };
+    return obj;
+  }
+
   @Post()
   @ApiBody({ type: UserEntity })
   createUser(@Body() body: User) {
