@@ -8,3 +8,9 @@ DATABASE_NAME=blackprop
 POSTGRES_DB=blackprop
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=postgres
+# Algorand
+# ALGO_API_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ALGO_API_TOKEN=
+ALGO_HOST_URL=https://node.testnet.algoexplorerapi.io
+ALGO_HOST_PORT=
+# ALGO_HOST_PORT=443
