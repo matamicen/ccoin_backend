@@ -37,7 +37,7 @@ export class AuthService {
       const { challenge_check, nowDate, isValidDate } =
         await this.token_validation(note, address, publicKeyB64);
 
-      if (!isValidDate) return false;
+      if (!isValidDate) return null;
       challenge_check.login_date = nowDate;
 
       const validTxn = this.validate_algorand_tx_siganture(
