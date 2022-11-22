@@ -5,10 +5,10 @@ services:
     # image: postgres:14
     image: postgres:12-alpine
     environment:
-     - POSTGRES_DB=blackprop
+     - POSTGRES_DB=climatecoin
      - POSTGRES_USER=admin
      - POSTGRES_PASSWORD=postgres
-    container_name: local_database_blackprop
+    container_name: local_database_climatecoin
     # env_file:
     #   - ./.envdevaws
     ports: 
