@@ -23,7 +23,8 @@
     "migrations:generate": "npm run typeorm -- migration:generate -n",
     "migrations:run": "npm run typeorm -- migration:run",
     "migrations:drop": "npm run typeorm -- schema:drop",
-    "migrations:show": "npm run typeorm -- migration:show"
+    "migrations:show": "npm run typeorm -- migration:show",
+    "migrations:revert": "npm run typeorm -- migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -44,6 +45,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.4.0",
+    "tweetnacl": "^1.0.3",
     "typeorm": "^0.2.37"
   },
   "devDependencies": {

@@ -2,20 +2,26 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
+export class Users {
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ApiProperty()
-  @Column()
+  @Column({
+    nullable: true,
+  })
   name: string;
 
   @ApiProperty()
-  @Column()
+  @Column({
+    nullable: true,
+  })
   lastname: string;
 
   @ApiProperty()
-  @Column()
+  @Column({
+    nullable: true,
+  })
   email: string;
 
   @ApiProperty()
@@ -28,11 +34,5 @@ export class User {
   @Column({
     nullable: true,
   })
-  email2: string;
-
-  @ApiProperty()
-  @Column({
-    nullable: true,
-  })
-  email11: string;
+  public_address: string;
 }

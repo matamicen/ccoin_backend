@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { Users } from './entities/users.entity';
 import algosdk from 'algosdk';
 import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
+import { TokensService } from 'src/tokens/tokens.service';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectRepository(Users) private userRepo: Repository<Users>,
+    private tokensSevice: TokensService,
     private readonly configService: ConfigService,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Users[]> {
     return this.userRepo.find();
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<Users> {
     return this.userRepo.findOne({
       where: {
         id: id,
@@ -25,7 +27,7 @@ export class UserService {
     });
   }
 
-  async findByemail(email: string): Promise<User | undefined> {
+  async findByemail(email: string): Promise<Users | undefined> {
     return this.userRepo.findOne({
       where: {
         email: email,
@@ -33,16 +35,23 @@ export class UserService {
     });
   }
 
-  async create(body: any): Promise<User> {
+  async findByAddress(address: string): Promise<Users | undefined> {
+    return this.userRepo.findOne({
+      where: {
+        public_address: address,
+      },
+    });
+  }
+
+  async create(body: any): Promise<Users> {
     console.log('viene bien1');
-    const newUser = new User();
+    const newUser = new Users();
     console.log('viene bien2');
     newUser.name = body.name;
     newUser.lastname = body.lastname;
     newUser.email = body.email;
-    console.log('viene bien3');
-    newUser.email2 = body.email2;
     newUser.password = body.password;
+    newUser.public_address = body.public_address;
     return this.userRepo.save(newUser);
   }
 
@@ -52,9 +61,18 @@ export class UserService {
         algosdk.decodeAddress(address).publicKey,
       ).toString('base64');
       const challenge = randomBytes(16).toString('base64');
+      console.log('challenge');
       console.log(challenge);
       console.log('publicKeyB64');
       console.log(publicKeyB64);
+
+      // create a token entry
+      const token_entry = await this.tokensSevice.create(
+        publicKeyB64,
+        challenge,
+        address,
+      );
+
       // const noteRaw = noteInstructions + '\n' + token.challenge
       // const note = enc.encode(noteRaw)
       const enc = new TextEncoder();
@@ -68,10 +86,11 @@ export class UserService {
       );
       const suggestedParams = await algodClient.getTransactionParams().do();
       console.log(suggestedParams);
+      // amount: Number(0),
       const unsignedTx = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         from: address,
         to: address,
-        amount: Number(0),
+        amount: 0,
         suggestedParams,
         note,
       });
@@ -79,6 +98,8 @@ export class UserService {
       // const tx2_encoded = algosdk.encodeObj(unsignedTx.get_obj_for_encoding());
       // const tx2_encoded_final = Buffer.from(tx2_encoded).toString('base64');
       // return tx2_encoded_final;
+      console.log('unsigned tx challenge')
+      console.log(unsignedTx)
       return algosdk.encodeUnsignedTransaction(unsignedTx);
     } catch (error) {
       console.log(error);
