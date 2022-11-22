@@ -9,10 +9,10 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './users.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '../types';
-import { User as UserEntity } from './entities/user.entity';
+import { Users as UserEntity } from './entities/users.entity';
 import { ApiBody } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -41,6 +41,7 @@ export class UserController {
     console.log('wallet:' + wallet);
     const authenticationTransaction: string =
       await this.userSevice.generateChallengeTx(wallet);
+    console.log('authenticationTransaction');
     console.log(authenticationTransaction);
     const obj = { tx: authenticationTransaction };
     return obj;
