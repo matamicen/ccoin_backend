@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TokensModule } from './tokens/tokens.module';
+import { SdgsModule } from './sdgs/sdgs.module';
+import { ProjectsModule } from './projects/projects.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -30,6 +32,8 @@ import { TokensModule } from './tokens/tokens.module';
     UserModule,
     AuthModule,
     TokensModule,
+    SdgsModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
