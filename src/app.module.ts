@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { TokensModule } from './tokens/tokens.module';
 import { SdgsModule } from './sdgs/sdgs.module';
 import { ProjectsModule } from './projects/projects.module';
+import { RegistriesModule } from './registries/registries.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -34,6 +35,7 @@ import { ProjectsModule } from './projects/projects.module';
     TokensModule,
     SdgsModule,
     ProjectsModule,
+    RegistriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

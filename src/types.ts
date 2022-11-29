@@ -17,4 +17,5 @@ export interface Project {
   serial: string;
   sdgs: number[];
   project_url: string;
+  registry: number;
 }
