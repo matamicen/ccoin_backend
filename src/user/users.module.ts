@@ -5,8 +5,9 @@ import { Users } from './entities/users.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TokensService } from 'src/tokens/tokens.service';
 import { Tokens } from 'src/tokens/entities/tokens.entity';
+import { Wallets } from './entities/wallets.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, Tokens])],
+  imports: [TypeOrmModule.forFeature([Users, Tokens, Wallets])],
   controllers: [UserController],
   providers: [UserService, TokensService],
   exports: [UserService],

@@ -53,10 +53,14 @@ export class AuthService {
         );
         if (user) {
           const { password, ...result } = user;
+          // @ts-ignore: Unreachable code error 
+          result.address = challenge_check.address;
           return result;
         } else {
           const user = { public_address: challenge_check.address };
-          const createdUser = this.userService.create(user);
+          const createdUser = await this.userService.create(user);
+          // @ts-ignore: Unreachable code error 
+          createdUser.address = challenge_check.address;
           return createdUser;
         }
       }
@@ -100,11 +104,12 @@ export class AuthService {
     const challenge_check = await this.tokensService.findByChallenge(note);
     if (challenge_check === undefined) return null;
     if (challenge_check.address !== address) return null;
-    if (challenge_check.public_key !== publicKeyB64) return null;
+    // We need to check the public_key? I think with the address is enough.
+    // if (challenge_check.public_key !== publicKeyB64) return null;
     const tokenDateTime = new Date(challenge_check.created_at).getTime() / 1000;
     const nowDate = new Date();
     const nowDateTime = nowDate.getTime() / 1000;
-    // the user has 300 secinds to sign the Tx in order to signIn (this is to avoid the user sends an older presigned tx with an older challenge)
+    // the user has 300 seconds to sign the Tx in order to signIn (this is to avoid the user sends an older presigned tx with an older challenge)
     const isValidDate = nowDateTime - tokenDateTime <= 300;
     return { challenge_check, nowDate, isValidDate };
   };
@@ -142,7 +147,7 @@ export class AuthService {
     const payload = {
       id: user.id,
       email: user.email,
-      address: user.public_address,
+      address: user.address,
     };
     return {
       access_token: this.jwtService.sign(payload),

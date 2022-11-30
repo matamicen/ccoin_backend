@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from './entities/users.entity';
+import { Wallets, UserBlockchain } from './entities/wallets.entity';
 import algosdk from 'algosdk';
 import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
@@ -11,6 +12,7 @@ import { TokensService } from 'src/tokens/tokens.service';
 export class UserService {
   constructor(
     @InjectRepository(Users) private userRepo: Repository<Users>,
+    @InjectRepository(Wallets) private walletRepo: Repository<Wallets>,
     private tokensSevice: TokensService,
     private readonly configService: ConfigService,
   ) {}
@@ -35,12 +37,29 @@ export class UserService {
     });
   }
 
+  // async findByAddress(address: string): Promise<Users | undefined> {
+  //   return this.userRepo.findOne({
+  //     where: {
+  //       public_address: address,
+  //     },
+  //   });
+  // }
+
   async findByAddress(address: string): Promise<Users | undefined> {
-    return this.userRepo.findOne({
-      where: {
-        public_address: address,
-      },
-    });
+    try {
+      const wallet = await this.walletRepo.findOne({
+        where: {
+          address: address,
+        },
+        relations: ['user'],
+      });
+      console.log('Matias1 wallet');
+      console.log(wallet);
+      return await this.findOne(wallet.user.id);
+    } catch (e) {
+      // The wallet doesn't exists
+      return undefined;
+    }
   }
 
   async create(body: any): Promise<Users> {
@@ -51,8 +70,15 @@ export class UserService {
     newUser.lastname = body.lastname;
     newUser.email = body.email;
     newUser.password = body.password;
-    newUser.public_address = body.public_address;
-    return this.userRepo.save(newUser);
+    // newUser.public_address = body.public_address;
+    const createdUser = await this.userRepo.save(newUser);
+    const createdWallet = this.createWallet(
+      body.public_address,
+      createdUser,
+      UserBlockchain.ALGORAND,
+    );
+
+    return createdWallet && createdUser;
   }
 
   async generateChallengeTx(address: string): Promise<any> {
@@ -98,11 +124,25 @@ export class UserService {
       // const tx2_encoded = algosdk.encodeObj(unsignedTx.get_obj_for_encoding());
       // const tx2_encoded_final = Buffer.from(tx2_encoded).toString('base64');
       // return tx2_encoded_final;
-      console.log('unsigned tx challenge')
-      console.log(unsignedTx)
+      console.log('unsigned tx challenge');
+      console.log(unsignedTx);
       return algosdk.encodeUnsignedTransaction(unsignedTx);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async createWallet(
+    address: string,
+    user: Users,
+    blockchain: UserBlockchain,
+  ): Promise<Wallets> {
+    console.log('viene bien1');
+    const newWallet = new Wallets();
+    console.log('viene bien2');
+    newWallet.blockchain = blockchain;
+    newWallet.address = address;
+    newWallet.user = user;
+    return this.walletRepo.save(newWallet);
   }
 }

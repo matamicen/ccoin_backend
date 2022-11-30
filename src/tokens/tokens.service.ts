@@ -40,7 +40,8 @@ export class TokensService {
     console.log('viene bien1');
     const newToken = new Tokens();
     console.log('viene bien2');
-    newToken.public_key = public_key;
+    // Do we need to check the public_key? I think with the address is enough
+    // newToken.public_key = public_key;
     newToken.challenge = challenge;
     newToken.address = address;
     console.log('viene bien3');

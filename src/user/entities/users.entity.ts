@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Wallets } from './wallets.entity';
 
 @Entity()
 export class Users {
@@ -31,8 +39,20 @@ export class Users {
   password: string;
 
   @ApiProperty()
-  @Column({
-    nullable: true,
-  })
-  public_address: string;
+  @OneToMany(() => Wallets, (wallets) => wallets.user)
+  wallets: Wallets[];
+
+  // @ApiProperty()
+  // @Column({
+  //   nullable: true,
+  // })
+  // public_address: string;
+
+  @ApiProperty()
+  @CreateDateColumn({ type: 'timestamptz' })
+  created_at: Date;
+
+  @ApiProperty()
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updated_at: Date;
 }

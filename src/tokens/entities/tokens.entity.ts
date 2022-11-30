@@ -12,9 +12,10 @@ export class Tokens {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @ApiProperty()
-  @Column()
-  public_key: string;
+  // We think this field is not necessary to valid a tx in algorand
+  // @ApiProperty()
+  // @Column({ nullable: true })
+  // public_key: string;
 
   @ApiProperty()
   @Column()
