@@ -63,15 +63,17 @@ export class UserService {
   }
 
   async create(body: any): Promise<Users> {
-    console.log('viene bien1');
+    console.log('crea usuario - imprimo body');
     const newUser = new Users();
-    console.log('viene bien2');
+    console.log(body);
     newUser.name = body.name;
     newUser.lastname = body.lastname;
     newUser.email = body.email;
     newUser.password = body.password;
     // newUser.public_address = body.public_address;
     const createdUser = await this.userRepo.save(newUser);
+    // no public_address means that the user do the signup withow connecting the wallet
+    if (!body.public_address) body.public_address = 'not assigned';
     const createdWallet = this.createWallet(
       body.public_address,
       createdUser,
