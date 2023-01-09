@@ -21,11 +21,12 @@ export class Wallets {
   id: number;
 
   @ApiProperty()
-  @Column({
-    type: 'enum',
-    enum: UserBlockchain,
-    default: UserBlockchain.ALGORAND,
-  })
+  @Column('text')
+  // @Column({
+  //   type: 'enum',
+  //   enum: UserBlockchain,
+  //   default: UserBlockchain.ALGORAND,
+  // })
   blockchain: UserBlockchain;
 
   @ApiProperty()

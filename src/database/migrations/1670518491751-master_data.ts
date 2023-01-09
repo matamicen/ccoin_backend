@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class masterData1669847544766 implements MigrationInterface {
+export class masterData1670518491751 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`INSERT INTO "registries"("id", "name", "description", "instructions") VALUES (DEFAULT, 'BME', '', 'BME instructions')`);
@@ -25,7 +25,6 @@ export class masterData1669847544766 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "sdgs"("id", "goal", "description", "image_url", "created_at", "updated_at") VALUES (DEFAULT, '15', 'Life on Land', 'https://www.un.org/development/desa/disabilities/wp-content/uploads/sites/15/2016/03/15-300x300.jpg', DEFAULT, DEFAULT)`);
         await queryRunner.query(`INSERT INTO "sdgs"("id", "goal", "description", "image_url", "created_at", "updated_at") VALUES (DEFAULT, '16', 'Peace and Justice Strong Institutions', 'https://www.un.org/development/desa/disabilities/envision2030-goal16.html', DEFAULT, DEFAULT)`);
         await queryRunner.query(`INSERT INTO "sdgs"("id", "goal", "description", "image_url", "created_at", "updated_at") VALUES (DEFAULT, '17', 'Partnerships to achieve the Goal', 'https://www.un.org/development/desa/disabilities/envision2030-goal17.html', DEFAULT, DEFAULT)`);
-    
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

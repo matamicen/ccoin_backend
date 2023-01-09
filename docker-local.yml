@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/nest/Dockerfile
-    image: nest_local
+    image: nest_local_ccoin
     container_name: local_nest
     # command: sh -c "npm run start:dev"
     command: sh -c "sleep 10 && npm run migrations:run && npm run start:dev"
